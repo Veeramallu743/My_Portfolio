@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Veer Mallu Panchumarthi — Resume</title>
+    <style>
+      :root {
+        --ink: #12203a;
+        --muted: #5a6b85;
+        --accent: #1d5fd0;
+        --line: #d8e0ee;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: "Segoe UI", Inter, Arial, sans-serif;
+        color: var(--ink);
+        line-height: 1.5;
+        font-size: 10.5pt;
+        background: #fff;
+      }
+      .page {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 40px 46px 46px;
+      }
+      header {
+        border-bottom: 2px solid var(--ink);
+        padding-bottom: 16px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 25pt;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      .role {
+        margin: 4px 0 12px;
+        font-size: 11.5pt;
+        font-weight: 600;
+        color: var(--accent);
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+      .contact {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 18px;
+        font-size: 9.5pt;
+        color: var(--muted);
+      }
+      .contact a { color: var(--muted); text-decoration: none; }
+      h2 {
+        margin: 22px 0 10px;
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--accent);
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 4px;
+      }
+      section:first-of-type h2 { margin-top: 6px; }
+      p.summary { margin: 0; color: #2c3a53; }
+      .job { margin-bottom: 14px; }
+      .job:last-child { margin-bottom: 0; }
+      .job-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+      }
+      .job-title { font-weight: 700; font-size: 10.8pt; }
+      .job-company { font-weight: 600; color: #33425e; }
+      .job-dates {
+        white-space: nowrap;
+        font-size: 9pt;
+        color: var(--muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .job-note { font-size: 8.7pt; color: var(--muted); margin: 1px 0 4px; }
+      ul { margin: 5px 0 0; padding-left: 18px; }
+      li { margin-bottom: 3px; }
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px 28px;
+      }
+      .skill-row { margin-bottom: 5px; }
+      .skill-label { font-weight: 700; }
+      .edu-item { margin-bottom: 8px; }
+      .edu-degree { font-weight: 700; }
+      .edu-meta { color: var(--muted); font-size: 9.5pt; }
+      @media print {
+        @page { margin: 12mm; }
+        .page { padding: 0; max-width: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Veer Mallu Panchumarthi</h1>
+        <p class="role">Senior AI Engineer</p>
+        <div class="contact">
+          <a href="mailto:veeramallu67@gmail.com">veeramallu67@gmail.com</a>
+          <a href="tel:+919030874030">+91 90308 74030</a>
+          <span>Hyderabad, India</span>
+        </div>
+      </header>
+
+      <section>
+        <h2>Summary</h2>
+        <p class="summary">
+          Senior AI Engineer with 5+ years of experience building production-ready
+          products across machine learning, deep learning, LLMs, RAG, agentic
+          workflows, NLP, and computer vision. Focused on turning promising models
+          into clear APIs, resilient workflows, and cloud systems that teams can
+          trust — useful, observable, and dependable in production.
+        </p>
+      </section>
+
+      <section>
+        <h2>Experience</h2>
+
+        <div class="job">
+          <div class="job-head">
+            <span><span class="job-title">Senior AI Engineer</span> — <span class="job-company">Ford Global Technology &amp; Business Center</span></span>
+            <span class="job-dates">2025 – Present</span>
+          </div>
+          <p class="job-note">Payroll: iKomet Technology Solutions Pvt. Ltd.</p>
+          <ul>
+            <li>Developing AI-powered document classification and information extraction pipelines for large-scale processing.</li>
+            <li>Designing scalable FastAPI services for model inference and asynchronous workflows with Google Cloud Pub/Sub.</li>
+            <li>Deploying production AI applications with Cloud Run and Docker.</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head">
+            <span><span class="job-title">Machine Learning Engineer</span> — <span class="job-company">Cloudstorm Software Pvt. Ltd.</span></span>
+            <span class="job-dates">2023 – 2025</span>
+          </div>
+          <ul>
+            <li>Implemented computer vision models for malaria detection using convolutional neural networks.</li>
+            <li>Developed prediction and classification pipelines, including feature engineering and model optimization.</li>
+            <li>Built REST APIs for ML model deployment.</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head">
+            <span><span class="job-title">Software Engineer</span> — <span class="job-company">63 Moons Technologies Ltd.</span></span>
+            <span class="job-dates">2021 – 2023</span>
+          </div>
+          <ul>
+            <li>Built NLP applications for text classification and sentiment analysis.</li>
+            <li>Developed emotion-classification models and optimized ML models for production.</li>
+            <li>Created internal REST APIs for machine-learning inference.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Selected Projects</h2>
+        <ul>
+          <li><strong>Enterprise Document Intelligence Platform</strong> — RAG-based ingestion, classification, metadata extraction, vector retrieval, and contextual generation in a cloud-native architecture (GCP, FastAPI).</li>
+          <li><strong>Malaria Detection using CNN</strong> — computer vision pipeline classifying microscopic blood-cell imagery, with preprocessing, augmentation, training, and model optimization.</li>
+          <li><strong>Language &amp; Emotion Intelligence</strong> — NLP for text classification, sentiment analysis, and emotion classification, delivered through production REST APIs.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Technical Skills</h2>
+        <div class="skill-row"><span class="skill-label">Intelligent systems:</span> Generative AI, Agentic AI, AI agents, Multi-agent systems, RAG, Transformers, MCP</div>
+        <div class="skill-row"><span class="skill-label">Models &amp; data:</span> NLP, Computer vision, ANN, CNN, RNN, LSTM, Feature engineering, Data preprocessing</div>
+        <div class="skill-row"><span class="skill-label">Application layer:</span> Python, FastAPI, LangChain, LangGraph, OpenAI, Gemini, Model evaluation pipelines</div>
+        <div class="skill-row"><span class="skill-label">Cloud &amp; delivery:</span> GCP, GCS, Pub/Sub, Cloud Run, Docker, Kubernetes, MLflow, Tekton, DevSecOps</div>
+      </section>
+
+      <section>
+        <h2>Education</h2>
+        <div class="edu-item">
+          <div class="edu-degree">Master of Computer Applications</div>
+          <div class="edu-meta">Central University of Haryana · 2017–2020</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">Bachelor of Science</div>
+          <div class="edu-meta">Acharya Nagarjuna University · 2014–2017</div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
