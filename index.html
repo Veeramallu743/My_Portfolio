@@ -87,9 +87,20 @@
     <div class="noise" aria-hidden="true"></div>
 
     <header class="site-header" data-header>
-      <a class="corner-mark" href="#top" aria-label="Veer Mallu Panchumarthi, home">
-        <i></i><i></i>
+      <a class="brand-logo" href="#top" aria-label="Veer Mallu Panchumarthi — home">
+        <span class="brand-badge" aria-hidden="true">VM</span>
+        <span class="brand-word">Veer&nbsp;<span class="brand-word-accent">Mallu</span></span>
       </a>
+
+      <nav class="section-nav" aria-label="Sections" data-section-nav>
+        <a href="#top">Home</a>
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#experience">Experience</a>
+        <a href="#stack">Stack</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
       <nav class="utility-nav" aria-label="Profiles and contact">
         <a href="https://github.com/Veeramallu743" target="_blank" rel="noopener noreferrer" aria-label="Veer Mallu Panchumarthi on GitHub (opens in a new tab)">
           <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false" fill="currentColor">
@@ -175,9 +186,60 @@
         </div>
       </div>
 
+      <section class="section about-section" id="about">
+        <header class="section-heading reveal-on-scroll">
+          <p class="section-kicker"><span>01</span> About</p>
+          <h2>Research that <em>reaches production.</em></h2>
+          <p>Five-plus years across software, machine learning, and applied AI — building systems teams can rely on.</p>
+        </header>
+
+        <div class="about-layout">
+          <div class="about-lead reveal-on-scroll">
+            <blockquote>“The best AI system is not just impressive in a demo — it is <em>useful, observable, and dependable</em> in production.”</blockquote>
+            <p>I’m Veer Mallu Panchumarthi, a Senior AI Engineer based in Hyderabad, India. Over the last five years I’ve moved through software engineering, machine learning, and now production AI — and kept the same goal throughout: take a promising model and make it something a team can actually depend on.</p>
+            <p>Today, at Ford’s Global Technology &amp; Business Center, I build AI-powered document classification and information-extraction pipelines — FastAPI inference services, asynchronous workflows on Google Cloud Pub/Sub, and containerised deployments on Cloud Run. Earlier I trained computer-vision models for malaria detection and shipped NLP services for text, sentiment, and emotion classification.</p>
+            <p>What ties it together is the space where research meets engineering: turning models into clear APIs, resilient workflows, and cloud architecture that is observable by default. I hold a Master of Computer Applications from the Central University of Haryana and a Bachelor of Science from Acharya Nagarjuna University, and I’m currently open to senior AI / ML engineering roles.</p>
+          </div>
+
+          <aside class="about-side reveal-on-scroll">
+            <dl class="about-facts">
+              <div><dt>Based in</dt><dd>Hyderabad, India</dd></div>
+              <div><dt>Currently</dt><dd>Senior AI Engineer, Ford GTBC</dd></div>
+              <div><dt>Focus</dt><dd>Generative &amp; Agentic AI · RAG · MLOps</dd></div>
+              <div><dt>Status</dt><dd>Open to senior AI / ML roles</dd></div>
+            </dl>
+            <div class="education-card">
+              <p>Education</p>
+              <h3>Master of Computer Applications</h3>
+              <span>Central University of Haryana · 2017–2020</span>
+              <h3>Bachelor of Science</h3>
+              <span>Acharya Nagarjuna University · 2014–2017</span>
+            </div>
+          </aside>
+        </div>
+
+        <div class="about-principles reveal-on-scroll">
+          <article>
+            <span class="expertise-number">01</span>
+            <h3>Model to product</h3>
+            <p>Turning research-grade models into clear, documented APIs and workflows.</p>
+          </article>
+          <article>
+            <span class="expertise-number">02</span>
+            <h3>Built to observe</h3>
+            <p>Logging, evaluation, and monitoring designed in from the start — not bolted on.</p>
+          </article>
+          <article>
+            <span class="expertise-number">03</span>
+            <h3>Cloud-native by default</h3>
+            <p>Docker, Cloud Run, and Pub/Sub, with delivery pipelines that ship safely.</p>
+          </article>
+        </div>
+      </section>
+
       <section class="section work-section" id="work">
         <header class="section-heading reveal-on-scroll">
-          <p class="section-kicker"><span>01</span> Selected work</p>
+          <p class="section-kicker"><span>02</span> Selected work</p>
           <h2>Systems designed for the <em>real world.</em></h2>
           <p>Three projects that connect model intelligence with dependable product engineering.</p>
         </header>
@@ -263,7 +325,7 @@
 
       <section class="section experience-section" id="experience">
         <header class="section-heading section-heading-dark reveal-on-scroll">
-          <p class="section-kicker"><span>02</span> Experience</p>
+          <p class="section-kicker"><span>03</span> Experience</p>
           <h2>Building upward, <em>shipping forward.</em></h2>
           <p>A career shaped across software, machine learning, and production AI.</p>
         </header>
@@ -299,9 +361,9 @@
         </div>
       </section>
 
-      <section class="section expertise-section" id="about">
+      <section class="section expertise-section" id="stack">
         <header class="section-heading reveal-on-scroll">
-          <p class="section-kicker"><span>03</span> Expertise</p>
+          <p class="section-kicker"><span>04</span> Stack</p>
           <h2>Depth across the <em>whole AI stack.</em></h2>
           <p>From data preparation and model evaluation to distributed workflows and cloud deployment.</p>
         </header>
@@ -323,24 +385,6 @@
             <span class="expertise-number">04</span><h3>Cloud &amp; delivery</h3>
             <p>GCP · GCS · Pub/Sub · Cloud Run · Docker · Kubernetes · MLflow · Tekton · DevSecOps</p>
           </article>
-        </div>
-
-        <div class="about-grid reveal-on-scroll">
-          <div class="about-statement">
-            <p class="section-kicker"><span>04</span> A little about me</p>
-            <blockquote>“The best AI system is not just impressive in a demo—it is <em>useful, observable, and dependable</em> in production.”</blockquote>
-          </div>
-          <div class="about-copy">
-            <p>I’m a Senior AI Engineer with 5+ years of experience building products across machine learning, deep learning, LLMs, RAG, agentic workflows, NLP, and computer vision.</p>
-            <p>I enjoy the point where research meets engineering: turning promising models into clear APIs, resilient workflows, and cloud systems that teams can trust.</p>
-          </div>
-          <div class="education-card">
-            <p>Education</p>
-            <h3>Master of Computer Applications</h3>
-            <span>Central University of Haryana · 2017–2020</span>
-            <h3>Bachelor of Science</h3>
-            <span>Acharya Nagarjuna University · 2014–2017</span>
-          </div>
         </div>
       </section>
 
@@ -364,18 +408,13 @@
     </main>
 
     <footer>
-      <a class="brand" href="#top"><span class="brand-mark">VM</span><span class="brand-name">Veer Mallu</span></a>
+      <a class="brand" href="#top">
+        <span class="brand-badge brand-badge-sm" aria-hidden="true">VM</span>
+        <span class="brand-name">Veer Mallu</span>
+      </a>
       <p>Senior AI Engineer · Generative AI · Agentic systems</p>
       <p>© <span data-year>2026</span> Veer Mallu Panchumarthi</p>
     </footer>
-
-    <nav class="floating-nav" aria-label="Portfolio sections" data-floating-nav aria-hidden="true" inert>
-      <a class="active" href="#top">Home</a>
-      <a href="#work">Work</a>
-      <a href="#experience">Experience</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
 
     <div class="scroll-progress" aria-hidden="true" data-scroll-progress></div>
     <div class="toast" role="status" aria-live="polite" data-toast>Email copied to clipboard</div>

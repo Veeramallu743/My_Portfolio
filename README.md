@@ -12,15 +12,16 @@ systems.
 
 ## Main features
 
-- Single-page portfolio: hero, career highlight strip, selected work, experience
-  timeline, expertise grid, about, and contact.
+- Single-page portfolio: hero, career highlight strip, about, selected work,
+  experience timeline, stack, and contact — in that order.
 - Dark navy / blue / sand visual language with restrained, purposeful motion.
 - Fully responsive, mobile-first layout (verified 320 → 1920 px).
-- Floating section navigation that stays out of the way over the hero and fades in
-  after it, with an accurate active-section indicator (`aria-current`).
-- Header profile links (GitHub, LinkedIn, email) as inline-SVG icons; the résumé
-  (`assets/resume.pdf`) is offered from the hero call-to-action and the contact
-  block, alongside a printable HTML version (`assets/resume.html`).
+- Fixed top navigation: a `VM` brand mark, a pill nav (Home · About · Work ·
+  Experience · Stack · Contact) with a gradient active pill and `aria-current`,
+  and inline-SVG profile icons (GitHub, LinkedIn, email). On phones the pill row
+  becomes a horizontally scrollable strip that keeps the active pill in view.
+- The résumé (`assets/resume.pdf`) is offered from the hero call-to-action and the
+  contact block, alongside a printable HTML version (`assets/resume.html`).
 - One-click "copy email" with a real clipboard fallback and honest success / failure
   feedback.
 - Optimised, responsive imagery (`<picture>` WebP + JPEG, each well under 150 KB).
@@ -63,6 +64,8 @@ My_Portfolio/
 ├── robots.txt          # crawl policy + sitemap reference
 ├── sitemap.xml         # single-URL sitemap
 ├── README.md
+├── docs/
+│   └── github-profile-README.md   # copy into a repo named "Veeramallu743" for the GitHub profile
 └── assets/
     ├── veer-mallu-panchumarthi.webp / .jpg   # hero portrait (900×1125)
     ├── og-reference-ui.jpg / .webp           # social preview image (1200×630)
@@ -81,12 +84,12 @@ My_Portfolio/
   1920 px, in portrait and landscape.
 - No horizontal overflow at any width; hero headline (incl. "Production-Ready") never
   clips or forces a scrollbar.
-- Project cards collapse cleanly from two columns to one; timeline, expertise,
+- Project cards collapse cleanly from two columns to one; about, timeline, stack,
   education and contact all have dedicated single-column mobile layouts.
-- `env(safe-area-inset-*)` support so the header and floating nav respect notches and
-  home indicators; `viewport-fit=cover`.
-- Fixed navigation never covers content (extra bottom padding + safe-area on the
-  contact section and footer).
+- On phones the header becomes two rows (brand + icons, then the scrollable pill
+  nav) and the hero clears it.
+- `env(safe-area-inset-*)` support so the header respects notches and home
+  indicators; `viewport-fit=cover`.
 
 **Accessibility**
 
@@ -95,13 +98,13 @@ My_Portfolio/
   `js` class added by an inline script, and there is an `IntersectionObserver`
   fallback for browsers without it.
 - Visible keyboard focus styles on every interactive element; `<details>` panels work
-  with Enter/Space; the floating nav is `inert` while hidden.
+  with Enter/Space.
 - Active section exposed with `aria-current`; decorative graphics use `aria-hidden`;
   links, images, tag lists and controls have accessible names.
 - Honours `prefers-reduced-motion` (pauses the ticker and all reveals) and
   `prefers-contrast: more` (stronger text, borders and focus).
-- Touch targets: the floating nav and primary actions are ≥ 44 px; secondary links
-  meet the 24 px minimum with adequate spacing.
+- Touch targets: the pill nav, profile icons, brand mark and primary actions are all
+  ≥ 44 px.
 
 ## Performance
 

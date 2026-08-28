@@ -5,11 +5,10 @@
   "use strict";
 
   var header = document.querySelector("[data-header]");
-  var hero = document.querySelector(".hero");
   var progress = document.querySelector("[data-scroll-progress]");
-  var floatingNav = document.querySelector("[data-floating-nav]");
-  var floatingLinks = Array.prototype.slice.call(
-    document.querySelectorAll("[data-floating-nav] a")
+  var sectionNav = document.querySelector("[data-section-nav]");
+  var navLinks = Array.prototype.slice.call(
+    document.querySelectorAll("[data-section-nav] a")
   );
   var revealItems = Array.prototype.slice.call(
     document.querySelectorAll(".reveal-on-scroll")
@@ -17,7 +16,7 @@
   var copyButton = document.querySelector("[data-copy-email]");
   var toast = document.querySelector("[data-toast]");
 
-  var navSections = floatingLinks
+  var navSections = navLinks
     .map(function (link) {
       var id = link.getAttribute("href");
       return id && id.length > 1 ? document.querySelector(id) : null;
@@ -25,18 +24,41 @@
     .filter(Boolean);
 
   var scrollFramePending = false;
+  var activeHref = null;
   var toastTimer;
   var labelTimer;
 
-  /* ---------- Active section in the floating nav ---------- */
+  /* ---------- Active section in the top pill nav ---------- */
+
+  function centrePill(link) {
+    // On narrow screens the pill row scrolls horizontally — keep the active
+    // pill in view without disturbing vertical page scroll.
+    if (!sectionNav || sectionNav.scrollWidth <= sectionNav.clientWidth + 4) return;
+    var navBox = sectionNav.getBoundingClientRect();
+    var linkBox = link.getBoundingClientRect();
+    var offset = linkBox.left - navBox.left + sectionNav.scrollLeft;
+    var target = offset - (sectionNav.clientWidth - linkBox.width) / 2;
+    try {
+      sectionNav.scrollTo({ left: target, behavior: "smooth" });
+    } catch (err) {
+      sectionNav.scrollLeft = target;
+    }
+  }
 
   function setActiveSection(section) {
     if (!section) return;
-    floatingLinks.forEach(function (link) {
-      var isActive = link.getAttribute("href") === "#" + section.id;
+    var href = "#" + section.id;
+    if (href === activeHref) return;
+    activeHref = href;
+    navLinks.forEach(function (link) {
+      var isActive = link.getAttribute("href") === href;
       link.classList.toggle("active", isActive);
-      if (isActive) link.setAttribute("aria-current", "true");
-      else link.removeAttribute("aria-current");
+      if (isActive) {
+        link.setAttribute("aria-current", "true");
+        centrePill(link);
+      } else {
+        link.removeAttribute("aria-current");
+      }
     });
   }
 
@@ -69,21 +91,7 @@
     var scrollable = docEl.scrollHeight - window.innerHeight;
     var percent = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
 
-    var headerHeight = header ? header.offsetHeight : 0;
-    var heroPassed = true;
-    if (hero) {
-      var heroBottom = hero.offsetTop + hero.offsetHeight - headerHeight - 40;
-      heroPassed = window.scrollY >= heroBottom;
-    }
-
     if (header) header.classList.toggle("scrolled", window.scrollY > 24);
-
-    if (floatingNav) {
-      floatingNav.classList.toggle("is-visible", heroPassed);
-      floatingNav.setAttribute("aria-hidden", String(!heroPassed));
-      if ("inert" in floatingNav) floatingNav.inert = !heroPassed;
-    }
-
     if (progress) progress.style.width = percent.toFixed(2) + "%";
 
     updateActiveNavigation();
