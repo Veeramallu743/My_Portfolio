@@ -18,8 +18,9 @@ systems.
 - Fully responsive, mobile-first layout (verified 320 → 1920 px).
 - Floating section navigation that stays out of the way over the hero and fades in
   after it, with an accurate active-section indicator (`aria-current`).
-- Downloadable résumé (`assets/resume.pdf`) plus a printable HTML version
-  (`assets/resume.html`).
+- Header profile links (GitHub, LinkedIn, email) as inline-SVG icons; the résumé
+  (`assets/resume.pdf`) is offered from the hero call-to-action and the contact
+  block, alongside a printable HTML version (`assets/resume.html`).
 - One-click "copy email" with a real clipboard fallback and honest success / failure
   feedback.
 - Optimised, responsive imagery (`<picture>` WebP + JPEG, each well under 150 KB).
