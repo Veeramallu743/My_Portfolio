@@ -1,121 +1,229 @@
-const header = document.querySelector('[data-header]');
-const hero = document.querySelector('.hero');
-const progress = document.querySelector('[data-scroll-progress]');
-const floatingNav = document.querySelector('[data-floating-nav]');
-const floatingLinks = [...document.querySelectorAll('[data-floating-nav] a')];
-const revealItems = document.querySelectorAll('.reveal-on-scroll');
-const copyButton = document.querySelector('[data-copy-email]');
-const toast = document.querySelector('[data-toast]');
+/* Portfolio interactions — dependency-free, progressive enhancement.
+   Every feature degrades safely: content is fully visible without JS,
+   and each capability is feature-detected before use. */
+(function () {
+  "use strict";
 
-const navSections = floatingLinks
-  .map((link) => document.querySelector(link.getAttribute('href')))
-  .filter(Boolean);
+  var header = document.querySelector("[data-header]");
+  var hero = document.querySelector(".hero");
+  var progress = document.querySelector("[data-scroll-progress]");
+  var floatingNav = document.querySelector("[data-floating-nav]");
+  var floatingLinks = Array.prototype.slice.call(
+    document.querySelectorAll("[data-floating-nav] a")
+  );
+  var revealItems = Array.prototype.slice.call(
+    document.querySelectorAll(".reveal-on-scroll")
+  );
+  var copyButton = document.querySelector("[data-copy-email]");
+  var toast = document.querySelector("[data-toast]");
 
-let scrollFramePending = false;
-let toastTimer;
+  var navSections = floatingLinks
+    .map(function (link) {
+      var id = link.getAttribute("href");
+      return id && id.length > 1 ? document.querySelector(id) : null;
+    })
+    .filter(Boolean);
 
-function setActiveSection(section) {
-  if (!section) return;
-  floatingLinks.forEach((link) => {
-    const isActive = link.getAttribute('href') === `#${section.id}`;
-    link.classList.toggle('active', isActive);
-    if (isActive) link.setAttribute('aria-current', 'page');
-    else link.removeAttribute('aria-current');
-  });
-}
+  var scrollFramePending = false;
+  var toastTimer;
+  var labelTimer;
 
-function updateActiveNavigation() {
-  if (!navSections.length) return;
+  /* ---------- Active section in the floating nav ---------- */
 
-  const nearPageEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8;
-  if (nearPageEnd) {
-    setActiveSection(document.querySelector('#contact'));
-    return;
+  function setActiveSection(section) {
+    if (!section) return;
+    floatingLinks.forEach(function (link) {
+      var isActive = link.getAttribute("href") === "#" + section.id;
+      link.classList.toggle("active", isActive);
+      if (isActive) link.setAttribute("aria-current", "true");
+      else link.removeAttribute("aria-current");
+    });
   }
 
-  const activationLine = window.scrollY + window.innerHeight * 0.34;
-  let currentSection = navSections[0];
+  function updateActiveNavigation() {
+    if (!navSections.length) return;
 
-  navSections.forEach((section) => {
-    if (section.offsetTop <= activationLine) currentSection = section;
-  });
+    var docEl = document.documentElement;
+    var nearPageEnd =
+      window.innerHeight + window.scrollY >= docEl.scrollHeight - 120;
+    if (nearPageEnd) {
+      setActiveSection(document.getElementById("contact") || navSections[navSections.length - 1]);
+      return;
+    }
 
-  setActiveSection(currentSection);
-}
-
-function updateScrollState() {
-  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-  const percent = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
-  const headerHeight = header?.offsetHeight ?? 0;
-  const heroBottom = hero ? hero.offsetTop + hero.offsetHeight - headerHeight : 0;
-  const heroHasPassed = !hero || window.scrollY >= heroBottom;
-
-  header?.classList.toggle('scrolled', window.scrollY > 24);
-  floatingNav?.classList.toggle('is-visible', heroHasPassed);
-  floatingNav?.setAttribute('aria-hidden', String(!heroHasPassed));
-  if (floatingNav) floatingNav.inert = !heroHasPassed;
-  if (progress) progress.style.width = `${percent}%`;
-
-  updateActiveNavigation();
-  scrollFramePending = false;
-}
-
-function requestScrollUpdate() {
-  if (scrollFramePending) return;
-  scrollFramePending = true;
-  window.requestAnimationFrame(updateScrollState);
-}
-
-window.addEventListener('scroll', requestScrollUpdate, { passive: true });
-window.addEventListener('resize', requestScrollUpdate, { passive: true });
-
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
+    // A section becomes "current" once its top crosses ~45% of the viewport.
+    var activationLine = window.scrollY + window.innerHeight * 0.45;
+    var current = navSections[0];
+    navSections.forEach(function (section) {
+      if (section.getBoundingClientRect().top + window.scrollY <= activationLine) {
+        current = section;
       }
     });
-  },
-  { threshold: 0.12, rootMargin: '0px 0px -5% 0px' },
-);
-
-revealItems.forEach((item) => revealObserver.observe(item));
-
-const navObserver = new IntersectionObserver(
-  updateActiveNavigation,
-  { threshold: [0, 0.01], rootMargin: '-24% 0px -66% 0px' },
-);
-
-navSections.forEach((section) => navObserver.observe(section));
-
-copyButton?.addEventListener('click', async () => {
-  const email = copyButton.dataset.email;
-  if (!email) return;
-
-  try {
-    await navigator.clipboard.writeText(email);
-  } catch {
-    const helper = document.createElement('textarea');
-    helper.value = email;
-    helper.setAttribute('readonly', '');
-    helper.style.position = 'fixed';
-    helper.style.opacity = '0';
-    document.body.appendChild(helper);
-    helper.select();
-    document.execCommand('copy');
-    helper.remove();
+    setActiveSection(current);
   }
 
-  if (toast) {
-    toast.classList.add('visible');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove('visible'), 2200);
+  /* ---------- Scroll-driven UI (rAF-throttled) ---------- */
+
+  function updateScrollState() {
+    var docEl = document.documentElement;
+    var scrollable = docEl.scrollHeight - window.innerHeight;
+    var percent = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+
+    var headerHeight = header ? header.offsetHeight : 0;
+    var heroPassed = true;
+    if (hero) {
+      var heroBottom = hero.offsetTop + hero.offsetHeight - headerHeight - 40;
+      heroPassed = window.scrollY >= heroBottom;
+    }
+
+    if (header) header.classList.toggle("scrolled", window.scrollY > 24);
+
+    if (floatingNav) {
+      floatingNav.classList.toggle("is-visible", heroPassed);
+      floatingNav.setAttribute("aria-hidden", String(!heroPassed));
+      if ("inert" in floatingNav) floatingNav.inert = !heroPassed;
+    }
+
+    if (progress) progress.style.width = percent.toFixed(2) + "%";
+
+    updateActiveNavigation();
+    scrollFramePending = false;
   }
-});
 
-const year = document.querySelector('[data-year]');
-if (year) year.textContent = String(new Date().getFullYear());
+  function requestScrollUpdate() {
+    if (scrollFramePending) return;
+    scrollFramePending = true;
+    if (window.requestAnimationFrame) window.requestAnimationFrame(updateScrollState);
+    else updateScrollState();
+  }
 
-updateScrollState();
+  window.addEventListener("scroll", requestScrollUpdate, { passive: true });
+  window.addEventListener("resize", requestScrollUpdate, { passive: true });
+  window.addEventListener("orientationchange", requestScrollUpdate, { passive: true });
+
+  /* ---------- Reveal on scroll (with fallback) ---------- */
+
+  function revealAll() {
+    revealItems.forEach(function (item) {
+      item.classList.add("visible");
+    });
+  }
+
+  if ("IntersectionObserver" in window && revealItems.length) {
+    var revealObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -8% 0px" }
+    );
+    revealItems.forEach(function (item) {
+      revealObserver.observe(item);
+    });
+    // Safety net: if the observer never fires (rare engine quirks), reveal
+    // anything already in view shortly after load.
+    window.addEventListener("load", function () {
+      window.setTimeout(function () {
+        revealItems.forEach(function (item) {
+          if (
+            !item.classList.contains("visible") &&
+            item.getBoundingClientRect().top < window.innerHeight
+          ) {
+            item.classList.add("visible");
+          }
+        });
+      }, 600);
+    });
+  } else {
+    revealAll();
+  }
+
+  if ("IntersectionObserver" in window && navSections.length) {
+    var navObserver = new IntersectionObserver(updateActiveNavigation, {
+      rootMargin: "-30% 0px -60% 0px",
+      threshold: [0, 0.25, 0.75],
+    });
+    navSections.forEach(function (section) {
+      navObserver.observe(section);
+    });
+  }
+
+  /* ---------- Copy email (reliable fallback + honest feedback) ---------- */
+
+  function showToast(message, ok) {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.toggle("toast-error", ok === false);
+    toast.classList.add("visible");
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function () {
+      toast.classList.remove("visible");
+    }, 2800);
+  }
+
+  function legacyCopy(text) {
+    try {
+      var helper = document.createElement("textarea");
+      helper.value = text;
+      helper.setAttribute("readonly", "");
+      helper.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;";
+      document.body.appendChild(helper);
+      helper.focus();
+      helper.select();
+      helper.setSelectionRange(0, text.length);
+      var ok = document.execCommand && document.execCommand("copy");
+      helper.remove();
+      return !!ok;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).then(
+        function () {
+          return true;
+        },
+        function () {
+          return legacyCopy(text);
+        }
+      );
+    }
+    return Promise.resolve(legacyCopy(text));
+  }
+
+  if (copyButton) {
+    copyButton.dataset.label = copyButton.textContent.trim();
+    copyButton.addEventListener("click", function () {
+      var email = copyButton.dataset.email;
+      if (!email) return;
+      copyText(email).then(function (ok) {
+        window.clearTimeout(labelTimer);
+        if (ok) {
+          copyButton.textContent = "Copied ✓";
+          showToast("Email copied to clipboard", true);
+        } else {
+          copyButton.textContent = "Press Ctrl+C";
+          showToast("Couldn’t copy automatically — " + email, false);
+        }
+        labelTimer = window.setTimeout(function () {
+          copyButton.textContent = copyButton.dataset.label;
+        }, 2600);
+      });
+    });
+  }
+
+  /* ---------- Footer year ---------- */
+
+  var year = document.querySelector("[data-year]");
+  if (year) year.textContent = String(new Date().getFullYear());
+
+  /* ---------- Initial paint ---------- */
+
+  updateScrollState();
+})();

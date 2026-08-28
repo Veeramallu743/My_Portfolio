@@ -2,13 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
     <meta name="theme-color" content="#0c1423" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="author" content="Veer Mallu Panchumarthi" />
+    <meta name="robots" content="index, follow" />
     <meta
       name="description"
       content="Portfolio of Veer Mallu Panchumarthi, a Senior AI Engineer building production-ready Generative AI, Agentic AI, RAG, and machine learning systems."
     />
+    <meta name="keywords" content="Senior AI Engineer, Generative AI, Agentic AI, RAG, Machine Learning, FastAPI, GCP, LangChain, LangGraph, Python" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Veer Mallu Panchumarthi — Portfolio" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content="Veer Mallu Panchumarthi — Senior AI Engineer" />
     <meta property="og:description" content="Production-ready Generative AI, Agentic AI, RAG, and machine learning systems." />
     <meta property="og:url" content="https://veeramallu743.github.io/My_Portfolio/" />
@@ -24,9 +33,12 @@
     <meta name="twitter:image:alt" content="Veer Mallu Panchumarthi — Senior AI Engineer, Production-Ready AI Systems" />
     <title>Veer Mallu Panchumarthi — Senior AI Engineer</title>
     <link rel="canonical" href="https://veeramallu743.github.io/My_Portfolio/" />
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png" />
+    <link rel="icon" href="favicon.ico" sizes="any" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+    <link rel="sitemap" type="application/xml" href="sitemap.xml" />
     <link rel="stylesheet" href="styles.css" />
     <script type="application/ld+json">
       {
@@ -37,15 +49,32 @@
         "url": "https://veeramallu743.github.io/My_Portfolio/",
         "image": "https://veeramallu743.github.io/My_Portfolio/assets/veer-mallu-panchumarthi.jpg",
         "email": "mailto:veeramallu67@gmail.com",
+        "telephone": "+91-90308-74030",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Hyderabad",
+          "addressRegion": "Telangana",
           "addressCountry": "IN"
         },
         "worksFor": {
           "@type": "Organization",
           "name": "Ford Global Technology & Business Center"
-        }
+        },
+        "alumniOf": [
+          { "@type": "CollegeOrUniversity", "name": "Central University of Haryana" },
+          { "@type": "CollegeOrUniversity", "name": "Acharya Nagarjuna University" }
+        ],
+        "knowsAbout": [
+          "Generative AI",
+          "Agentic AI",
+          "Retrieval-Augmented Generation",
+          "Machine Learning",
+          "Natural Language Processing",
+          "Computer Vision",
+          "FastAPI",
+          "Google Cloud Platform"
+        ],
+        "sameAs": ["https://github.com/Veeramallu743"]
       }
     </script>
     <script src="script.js" defer></script>
@@ -59,6 +88,7 @@
         <i></i><i></i>
       </a>
       <nav class="utility-nav" aria-label="Utility navigation">
+        <a href="https://github.com/Veeramallu743" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
         <a href="mailto:veeramallu67@gmail.com">Email <span aria-hidden="true">↗</span></a>
         <a href="assets/resume.pdf" download="Veer-Mallu-Panchumarthi-Resume.pdf" aria-label="Download Veer Mallu Panchumarthi's resume">Resume <span aria-hidden="true">↓</span></a>
       </nav>
@@ -87,7 +117,14 @@
             <div class="portrait-image">
               <picture>
                 <source srcset="assets/veer-mallu-panchumarthi.webp" type="image/webp" />
-                <img src="assets/veer-mallu-panchumarthi.jpg" alt="Veer Mallu Panchumarthi" width="640" height="800" fetchpriority="high" />
+                <img
+                  src="assets/veer-mallu-panchumarthi.jpg"
+                  alt="Studio headshot of Veer Mallu Panchumarthi"
+                  width="900"
+                  height="1125"
+                  fetchpriority="high"
+                  decoding="async"
+                />
               </picture>
             </div>
             <div class="portrait-meta">
@@ -97,6 +134,21 @@
           </div>
           <i class="portrait-spark" aria-hidden="true"></i>
           <i class="portrait-ring" aria-hidden="true"></i>
+        </div>
+      </section>
+
+      <section class="impact-strip" aria-label="Career highlights">
+        <div class="impact-item">
+          <strong>5+</strong>
+          <span>Years building<br />production AI systems</span>
+        </div>
+        <div class="impact-item">
+          <strong>3</strong>
+          <span>Engineering roles across<br />software, ML &amp; AI</span>
+        </div>
+        <div class="impact-item">
+          <strong>End&#8209;to&#8209;end</strong>
+          <span>From model design<br />to cloud delivery</span>
         </div>
       </section>
 
@@ -279,7 +331,7 @@
       <section class="contact-section" id="contact">
         <div class="contact-orbit" aria-hidden="true"></div>
         <p class="section-kicker reveal-on-scroll"><span>05</span> Contact</p>
-        <h2 class="reveal-on-scroll">Have a complex AI problem?<br /><em>Let’s make it practical.</em></h2>
+        <h2 class="reveal-on-scroll">Have a complex AI problem? <br /><em>Let’s make it practical.</em></h2>
         <div class="contact-actions reveal-on-scroll">
           <a class="button button-primary button-large" href="mailto:veeramallu67@gmail.com">Start a conversation <span aria-hidden="true">↗</span></a>
           <button class="copy-button" type="button" data-copy-email data-email="veeramallu67@gmail.com">Copy email</button>
@@ -287,6 +339,7 @@
         <div class="contact-details reveal-on-scroll">
           <a href="mailto:veeramallu67@gmail.com">veeramallu67@gmail.com</a>
           <a href="tel:+919030874030">+91 90308 74030</a>
+          <a href="https://github.com/Veeramallu743" target="_blank" rel="noopener noreferrer">github.com/Veeramallu743 <span aria-hidden="true">↗</span></a>
           <span>Hyderabad, India</span>
         </div>
       </section>
