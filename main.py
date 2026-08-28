@@ -3,11 +3,15 @@
 from __future__ import annotations
 
 import argparse
+import mimetypes
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent
+
+mimetypes.add_type("image/webp", ".webp")
+mimetypes.add_type("application/xml", ".xml")
 
 
 class PortfolioHandler(SimpleHTTPRequestHandler):

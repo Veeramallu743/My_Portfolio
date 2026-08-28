@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://veeramallu743.github.io/My_Portfolio/sitemap.xml

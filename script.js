@@ -1,50 +1,95 @@
 const header = document.querySelector('[data-header]');
+const hero = document.querySelector('.hero');
 const progress = document.querySelector('[data-scroll-progress]');
-const menuButton = document.querySelector('[data-menu-button]');
-const mobileMenu = document.querySelector('[data-mobile-menu]');
+const floatingNav = document.querySelector('[data-floating-nav]');
+const floatingLinks = [...document.querySelectorAll('[data-floating-nav] a')];
 const revealItems = document.querySelectorAll('.reveal-on-scroll');
 const copyButton = document.querySelector('[data-copy-email]');
 const toast = document.querySelector('[data-toast]');
-const floatingLinks = document.querySelectorAll('[data-floating-nav] a');
+
+const navSections = floatingLinks
+  .map((link) => document.querySelector(link.getAttribute('href')))
+  .filter(Boolean);
+
+let scrollFramePending = false;
+let toastTimer;
+
+function setActiveSection(section) {
+  if (!section) return;
+  floatingLinks.forEach((link) => {
+    const isActive = link.getAttribute('href') === `#${section.id}`;
+    link.classList.toggle('active', isActive);
+    if (isActive) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+}
+
+function updateActiveNavigation() {
+  if (!navSections.length) return;
+
+  const nearPageEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8;
+  if (nearPageEnd) {
+    setActiveSection(document.querySelector('#contact'));
+    return;
+  }
+
+  const activationLine = window.scrollY + window.innerHeight * 0.34;
+  let currentSection = navSections[0];
+
+  navSections.forEach((section) => {
+    if (section.offsetTop <= activationLine) currentSection = section;
+  });
+
+  setActiveSection(currentSection);
+}
 
 function updateScrollState() {
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
   const percent = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+  const headerHeight = header?.offsetHeight ?? 0;
+  const heroBottom = hero ? hero.offsetTop + hero.offsetHeight - headerHeight : 0;
+  const heroHasPassed = !hero || window.scrollY >= heroBottom;
+
   header?.classList.toggle('scrolled', window.scrollY > 24);
+  floatingNav?.classList.toggle('is-visible', heroHasPassed);
+  floatingNav?.setAttribute('aria-hidden', String(!heroHasPassed));
+  if (floatingNav) floatingNav.inert = !heroHasPassed;
   if (progress) progress.style.width = `${percent}%`;
+
+  updateActiveNavigation();
+  scrollFramePending = false;
 }
 
-function closeMenu() {
-  menuButton?.setAttribute('aria-expanded', 'false');
-  mobileMenu?.classList.remove('open');
+function requestScrollUpdate() {
+  if (scrollFramePending) return;
+  scrollFramePending = true;
+  window.requestAnimationFrame(updateScrollState);
 }
 
-menuButton?.addEventListener('click', () => {
-  const open = menuButton.getAttribute('aria-expanded') === 'true';
-  menuButton.setAttribute('aria-expanded', String(!open));
-  mobileMenu?.classList.toggle('open', !open);
-});
+window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+window.addEventListener('resize', requestScrollUpdate, { passive: true });
 
-mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
-document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMenu(); });
-window.addEventListener('scroll', updateScrollState, { passive: true });
-updateScrollState();
-
-const observer = new IntersectionObserver(
+const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+        revealObserver.unobserve(entry.target);
       }
     });
   },
   { threshold: 0.12, rootMargin: '0px 0px -5% 0px' },
 );
 
-revealItems.forEach((item) => observer.observe(item));
+revealItems.forEach((item) => revealObserver.observe(item));
 
-let toastTimer;
+const navObserver = new IntersectionObserver(
+  updateActiveNavigation,
+  { threshold: [0, 0.01], rootMargin: '-24% 0px -66% 0px' },
+);
+
+navSections.forEach((section) => navObserver.observe(section));
+
 copyButton?.addEventListener('click', async () => {
   const email = copyButton.dataset.email;
   if (!email) return;
@@ -73,22 +118,4 @@ copyButton?.addEventListener('click', async () => {
 const year = document.querySelector('[data-year]');
 if (year) year.textContent = String(new Date().getFullYear());
 
-const navSections = [...floatingLinks]
-  .map((link) => document.querySelector(link.getAttribute('href')))
-  .filter(Boolean);
-
-const navObserver = new IntersectionObserver(
-  (entries) => {
-    const visible = entries
-      .filter((entry) => entry.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-    if (!visible) return;
-    floatingLinks.forEach((link) => {
-      link.classList.toggle('active', link.getAttribute('href') === `#${visible.target.id}`);
-    });
-  },
-  { threshold: [0.15, 0.35, 0.6], rootMargin: '-18% 0px -55% 0px' },
-);
-
-navSections.forEach((section) => navObserver.observe(section));
+updateScrollState();
